@@ -2,9 +2,10 @@ import Column from "../../components/Column"
 
 const Home = () => {
     return (
-        <main>
+        <main >
             <div className="container-fluid py-3">
-                <div className="row">
+            <h3>Trello Clone</h3>
+                <div className="d-flex">
                     {[1, 2, 3, 4].map((index) => <Column title={`Coluna ${index}`} />)}
                 </div>
             </div>

@@ -1,13 +1,36 @@
 main {
     height: 100%;
-    background: rgb(245,245,245);
-    background: linear-gradient(90deg, rgba(245,245,245,1) 0%, rgba(219,60,254,1) 50%, rgba(131,58,180,1) 100%);
+    background: #fff;
+   
 }
 
 .column{
     background-color: #dedede;
-    width: 100%;
+    width: 95%;
     min-height: 200px;
+    height: calc(100vh - 35px);
+    overflow-x: hidden;
     border-radius: 5px;
     padding: 10px;
+}
+
+.column > .row{
+    height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+.card{
+    background-color: #fbfbfb;
+    cursor: pointer;
+}
+
+h3{
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #7f7f9c;
 }
