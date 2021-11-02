@@ -5,6 +5,25 @@ const Column = ({ title, id }) => {
 
     const dispatch = useDispatch()
     const { cards } = useSelector( (state) => state.tasks)
+    const columnCards = cards?.filter((c) => c?.columnId === id)
+
+    const actionSetModal = {
+        type: '@TASKS/SET_MODAL',
+        modal:{
+            opened: true,
+            type:  'CREATE'
+        }
+    }
+
+    const actionSetCard = {
+        type: '@TASKS/SET_CARD',
+        card: {
+            id: null,
+            columnId: parseInt(id),
+            title: '',
+            description: ''
+        }
+    }
 
     return (
         <div className="col-3 ">
@@ -14,19 +33,14 @@ const Column = ({ title, id }) => {
                     <button 
                     className="btn btn-success"
                     onClick={ () => {
-                        const action = {
-                            type: '@TASKS/SET_MODAL',
-                            modal:{
-                                opened: true
-                            }
-                        }
-                        dispatch(action)
+                        dispatch(actionSetCard)
+                        dispatch(actionSetModal)
                     }}>+</button>
                 </div>
              
                 <div className="row">
                   <div className="col-12">
-                    {cards?.filter((c) => c?.columnId === id).map( () => <Card/> )}
+                    {columnCards?.map( (card) => <Card {...card}/> )}
                   </div>
                 </div>
             </div>

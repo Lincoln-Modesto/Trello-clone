@@ -1,26 +1,102 @@
 import SweetAlert from 'react-bootstrap-sweetalert'
+import { useSelector, useDispatch } from 'react-redux'
 
-const Modal = (props) => {
+const Modal = () => {
+
+  const dispatch = useDispatch()
+  const { modal, columns, card } = useSelector((state) => state.tasks)
+
+  const closeModal = () => {
+    const action = {
+      type: '@TASKS/SET_MODAL',
+      modal: {
+        opened: false
+      }
+    }
+    dispatch(action)
+  }
+
+  const setCard = (obj) => {
+    const action = {
+      type: '@TASKS/SET_CARD',
+      card: obj
+    }
+    dispatch(action)
+  }
+
+  const addCard = () => {
+    const action = {
+      type: '@TASKS/ADD_CARD',
+    }
+    dispatch(action)
+    closeModal()
+  }
+
+  const removeCard = () => {
+    const action = {
+      type: '@TASKS/REMOVE_CARD',
+    }
+    dispatch(action)
+    closeModal()
+  }
+
   return (
-    <SweetAlert {...props}>
-      <h4>Atualizar Task</h4>
-      <select className="form-control">
-        <option>Coluna 1</option>
-        <option>Coluna 2</option>
-        <option>Coluna 3</option>
-        <option>Coluna 4</option>
+    <SweetAlert
+      show={modal?.opened}
+      showConfirm={false}
+      onConfirm={() => closeModal()}
+      onCancel={() => closeModal()}
+    >
+      <h4>{modal.type === 'CREATE' ? 'Criar ' : 'Atualizar '}Task</h4>
+      <select
+        value={card?.columnId}
+        className="form-control"
+        onChange={
+          (e) => {
+            setCard({
+              columnId: parseInt(e.target.value)
+            })
+          }
+        }>
+        {columns?.map((column) =>
+          <option value={column?.id}>{column?.title}</option>
+        )}
       </select>
       <input
         placeholder="Nome da Task"
         type="text"
-        className="form-control mt-2" />
+        value={card?.title}
+        className="form-control mt-2"
+        onChange={
+          (e) => {
+            setCard({
+              title: e.target.value
+            })
+          }
+        } />
       <textarea
         placeholder="Descrição da Task"
+        value={card?.description}
         className="form-control mt-2"
-        rows={3} />
-        <button className="btn btn-block btn-success mt-2">
-          Atualizar
-        </button>
+        rows={3}
+        onChange={
+          (e) => {
+            setCard({
+              description: e.target.value
+            })
+          }
+        } />
+      <button
+        className={`btn btn-block btn-${modal.type === 'CREATE' ? 'success' : 'primary'} mt-2`}
+        onClick={() => addCard()}
+      >
+        {modal.type === 'CREATE' ? 'Criar' : 'Atualizar'}
+      </button>
+      {modal.type === 'UPDATE' &&
+        <button
+          className="btn btn-block btn-danger"
+          onClick={() => removeCard()}
+        >Excluir</button>}
     </SweetAlert >
   )
 }

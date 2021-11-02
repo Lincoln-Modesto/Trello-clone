@@ -5,7 +5,16 @@ import Modal from '../../components/Card/modal'
 const Home = () => {
 
     const dispatch = useDispatch()
-    const { columns, modal } = useSelector((state) => state.tasks)
+    const { columns } = useSelector((state) => state.tasks)
+
+    const actionUpdateColumn = (name) => {
+        const action = {
+            type: '@TASKS/UPDATE_COLUMN_NAME',
+            column: name
+        }
+        console.log(name)
+        dispatch(action)
+    }
 
     return (
         <>
@@ -19,12 +28,8 @@ const Home = () => {
                                 className="form-control"
                                 placeholder="Adicionar tabela"
                                 onChange={
-                                    (e) => {
-                                        const action = {
-                                            type: '@TASKS/UPDATE_COLUMN_NAME',
-                                            column: e.target.value
-                                        }
-                                        dispatch(action)
+                                    (name) => {
+                                        actionUpdateColumn(name.target.value)
                                     }
                                 } />
                             <div className="d-flex align-items-center">
@@ -44,12 +49,7 @@ const Home = () => {
                     </div>
                 </div>
             </main>
-            <Modal
-                show={modal?.opened}
-                showConfirm={false}
-            //onConfirm={() => setOpened(false)}
-            //onCancel={() => setOpened(false)}
-            />
+            <Modal/>
         </>
     )
 }
