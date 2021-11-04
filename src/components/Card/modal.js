@@ -1,5 +1,6 @@
 import SweetAlert from 'react-bootstrap-sweetalert'
 import { useSelector, useDispatch } from 'react-redux'
+import types from '../../store/modules/task/types'
 
 const Modal = () => {
 
@@ -8,7 +9,7 @@ const Modal = () => {
 
   const closeModal = () => {
     const action = {
-      type: '@TASKS/SET_MODAL',
+      type: types.SET_MODAL,
       modal: {
         opened: false
       }
@@ -18,15 +19,15 @@ const Modal = () => {
 
   const setCard = (obj) => {
     const action = {
-      type: '@TASKS/SET_CARD',
+      type: types.SET_CARD,
       card: obj
     }
     dispatch(action)
   }
 
-  const addCard = () => {
+  const changeCard = () => {
     const action = {
-      type: '@TASKS/ADD_CARD',
+      type: modal?.type === 'CREATE' ? types.ADD_CARD : types.UPDATE_CARD,
     }
     dispatch(action)
     closeModal()
@@ -34,7 +35,7 @@ const Modal = () => {
 
   const removeCard = () => {
     const action = {
-      type: '@TASKS/REMOVE_CARD',
+      type: types.REMOVE_CARD,
     }
     dispatch(action)
     closeModal()
@@ -88,7 +89,7 @@ const Modal = () => {
         } />
       <button
         className={`btn btn-block btn-${modal.type === 'CREATE' ? 'success' : 'primary'} mt-2`}
-        onClick={() => addCard()}
+        onClick={() => changeCard()}
       >
         {modal.type === 'CREATE' ? 'Criar' : 'Atualizar'}
       </button>

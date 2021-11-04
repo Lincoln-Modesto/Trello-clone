@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import Card from "../Card"
+import types from "../../store/modules/task/types"
 
 const Column = ({ title, id }) => {
 
@@ -8,7 +9,7 @@ const Column = ({ title, id }) => {
     const columnCards = cards?.filter((c) => c?.columnId === id)
 
     const actionSetModal = {
-        type: '@TASKS/SET_MODAL',
+        type: types.SET_MODAL,
         modal:{
             opened: true,
             type:  'CREATE'
@@ -16,7 +17,7 @@ const Column = ({ title, id }) => {
     }
 
     const actionSetCard = {
-        type: '@TASKS/SET_CARD',
+        type: types.SET_CARD,
         card: {
             id: null,
             columnId: parseInt(id),

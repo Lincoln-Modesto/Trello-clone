@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux"
+import types from "../../store/modules/task/types";
 
 const Card = ({id, title, description, columnId}) => {
 
   const dispatch = useDispatch();
 
   const actionSetModal = {
-    type: '@TASKS/SET_MODAL',
+    type: types.SET_MODAL,
     modal:{
         opened: true,
         type: 'UPDATE'
@@ -13,7 +14,7 @@ const Card = ({id, title, description, columnId}) => {
 }
 
 const actionSetCard = {
-    type: '@TASKS/SET_CARD',
+    type: types.SET_CARD,
     card: {
         id,
         columnId,
