@@ -1,6 +1,6 @@
 import SweetAlert from 'react-bootstrap-sweetalert'
 import { useSelector, useDispatch } from 'react-redux'
-import types from '../../store/modules/task/types'
+import { setModal, setCard, addCard, updateCard, removeCard } from '../../store/modules/task/actions'
 
 const Modal = () => {
 
@@ -8,36 +8,26 @@ const Modal = () => {
   const { modal, columns, card } = useSelector((state) => state.tasks)
 
   const closeModal = () => {
-    const action = {
-      type: types.SET_MODAL,
-      modal: {
+    dispatch(setModal(
+      {
         opened: false
       }
-    }
-    dispatch(action)
+    ))
   }
 
-  const setCard = (obj) => {
-    const action = {
-      type: types.SET_CARD,
-      card: obj
-    }
-    dispatch(action)
+  const actionSetCard = (obj) => {
+    dispatch(setCard(obj))
   }
 
   const changeCard = () => {
-    const action = {
-      type: modal?.type === 'CREATE' ? types.ADD_CARD : types.UPDATE_CARD,
-    }
+    const action = 
+      modal?.type === "CREATE" ? addCard() : updateCard();
     dispatch(action)
     closeModal()
   }
 
-  const removeCard = () => {
-    const action = {
-      type: types.REMOVE_CARD,
-    }
-    dispatch(action)
+  const actionRemoveCard = () => {
+    dispatch(removeCard())
     closeModal()
   }
 
@@ -54,7 +44,7 @@ const Modal = () => {
         className="form-control"
         onChange={
           (e) => {
-            setCard({
+            actionSetCard({
               columnId: parseInt(e.target.value)
             })
           }
@@ -70,7 +60,7 @@ const Modal = () => {
         className="form-control mt-2"
         onChange={
           (e) => {
-            setCard({
+            actionSetCard({
               title: e.target.value
             })
           }
@@ -82,7 +72,7 @@ const Modal = () => {
         rows={3}
         onChange={
           (e) => {
-            setCard({
+            actionSetCard({
               description: e.target.value
             })
           }
@@ -96,7 +86,7 @@ const Modal = () => {
       {modal.type === 'UPDATE' &&
         <button
           className="btn btn-block btn-danger"
-          onClick={() => removeCard()}
+          onClick={() => actionRemoveCard()}
         >Excluir</button>}
     </SweetAlert >
   )
