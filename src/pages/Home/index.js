@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Column from "../../components/Column"
 import Modal from '../../components/Card/modal'
-import types from '../../store/modules/task/types'
+import { updateColumnName, addColumn } from '../../store/modules/task/actions'
 
 const Home = () => {
 
@@ -9,12 +9,7 @@ const Home = () => {
     const { columns } = useSelector((state) => state.tasks)
 
     const actionUpdateColumn = (name) => {
-        const action = {
-            type: types.UPDATE_COLUMN_NAME,
-            column: name
-        }
-        console.log(name)
-        dispatch(action)
+        dispatch(updateColumnName(name))
     }
 
     return (
@@ -36,9 +31,9 @@ const Home = () => {
                             <div className="d-flex align-items-center">
                                 <button
                                     className="btn btn-sm btn-success mx-2 py-1"
-                                    onClick={() => dispatch({
-                                        type: types.ADD_COLUMN
-                                    })}>
+                                    onClick={() => dispatch(
+                                       addColumn()
+                                    )}>
                                     Adicionar
                                 </button>
                             </div>
