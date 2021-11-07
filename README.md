@@ -1,5 +1,7 @@
 # Trello Clone
 
+Inspirado no gerenciador de atividades e tarefas trello, esse projeto lista as tarefas em colunas e cards diferentes. Aplicação Reactjs, utilizando Redux como gerenciador de estado e contexto, bootstrap para estilização e com drag-and-drop nos cards das colunas.
+
 Esse projeto foi construído com [Create React App](https://github.com/facebook/create-react-app).
 
 ## Scripts

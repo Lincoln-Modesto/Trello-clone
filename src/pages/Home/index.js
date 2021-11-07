@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Column from "../../components/Column"
 import Modal from '../../components/Card/modal'
-import { updateColumnName, addColumn } from '../../store/modules/task/actions'
+import { updateColumnName, addColumn, setCard, updateCard } from '../../store/modules/task/actions'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 const Home = () => {
 
@@ -10,6 +11,18 @@ const Home = () => {
 
     const actionUpdateColumn = (name) => {
         dispatch(updateColumnName(name))
+    }
+
+    const onDropCard = (params) => {
+        const id = parseInt(params?.draggableId)
+        const columnId = parseInt(params?.destination?.droppableId)
+
+        dispatch(setCard({
+            id,
+            columnId
+        }))
+
+        dispatch(updateCard())
     }
 
     return (
@@ -41,7 +54,11 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="d-flex">
+                        <DragDropContext
+                            onDragEnd={(params) => onDropCard(params)}
+                        >
                         {columns?.map((column) => <Column {...column} />)}
+                        </DragDropContext>
                     </div>
                 </div>
             </main>
